@@ -7,15 +7,11 @@ import gym
 import pygame
 
 import torch
-import tensorflow as tf
 
 # all of the libraries above can be installed with pip
 # ex: pip install numpy or pip install torch
 
-
 #from DQN import DQNAgent
-
-
 
 # Hyperparams
 input_dims = 4
