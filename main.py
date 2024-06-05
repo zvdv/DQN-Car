@@ -52,7 +52,6 @@ if __name__ == "__main__":
             if terminated or trunicated:
                 done = True
 
-
             # Store our memory
 
             # learn?

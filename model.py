@@ -1,7 +1,6 @@
 import numpy as np
 
 import torch
-import tensorflow 
 
 # pro tip: the target network and the network network need to have the 
 # exact same architecture otherwise you cannot copy the weights between them.
