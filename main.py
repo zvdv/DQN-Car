@@ -16,8 +16,8 @@ from DQN import DQNAgent
 # Hyperparams
 input_dims = 4
 output_dims = 2
-# likely want to put in some other cool things here like batch size, learning rate, etc. 
-learning_rate = 0.2
+batch_size = 32 #I picked this pretty randomly
+learning_rate = 2e-4
 episodes = 0
 
 # Global Constants, change these
@@ -26,7 +26,7 @@ MAX_EPISODES = 1
 
 if __name__ == "__main__":
     env = gym.make('CartPole-v1', render_mode='human')
-    agnet = DQNAgent(input_dims, output_dims)
+    agent = DQNAgent(input_dims, output_dims)
 
     # Make the main game loop.  
 
@@ -42,8 +42,10 @@ if __name__ == "__main__":
             
             
             # Get action, ideally through your agent
-            action = env.action_space.sample()
-            
+            #action = env.action_space.sample()
+            action = agent.get_action(observation)
+            action = action.numpy()
+
             # Take the action and observe the result
             observation, reward, terminated, trunicated, info = env.step(action)
             

@@ -14,8 +14,8 @@ class DQNAgent():
             self.input_dims = input_dims
             #self.observation_space = observation_space
 
-            self.model = Model
-            self.target_model = Model
+            self.model = Model(input_dims, output_dims)
+            self.target_model = Model(input_dims, output_dims)
 
             #self.replay_memory =             
 
@@ -36,7 +36,10 @@ class DQNAgent():
         or it can be inputted into this function as a tensor already. 
         mostly fashion. do what you please.
         '''
-        action = 0
+        state_tensor = torch.tensor(state)
+        result = self.model(state_tensor)
+        action = torch.argmax(result)
+
         return action
     
     def learn(self) -> float:

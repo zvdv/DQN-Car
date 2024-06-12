@@ -8,18 +8,21 @@ import torch.nn.functional as F
 # exact same architecture otherwise you cannot copy the weights between them.
 
 
-def Model():
+def Model(input_dims, output_dims):
     '''this shouldn't need to be a class. this model should be very simple.
     especially for cartpole, like, 2 dense, an output, and no convolutions 
     should be more than enough.'''
 
+    '''PyTorch defines the size of the matrix multiplication operation between layers
+        (why there's 2 dimensions) rather than defining the size of each individual layer
+        like TensorFlow does.'''
     model = nn.Sequential(
-        nn.Linear(4, 18),
+        nn.Linear(input_dims, 20),
         nn.ReLU(),
-        nn.Linear(18, 10),
+        nn.Linear(20, 18),
         nn.ReLU(),
-        nn.Linear(10, 1),
+        nn.Linear(18, output_dims),
         nn.Sigmoid()
     )
 
-    return
+    return model
