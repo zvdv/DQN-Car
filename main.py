@@ -11,12 +11,13 @@ import torch
 # all of the libraries above can be installed with pip
 # ex: pip install numpy or pip install torch
 
-#from DQN import DQNAgent
+from DQN import DQNAgent
 
 # Hyperparams
 input_dims = 4
 output_dims = 2
 # likely want to put in some other cool things here like batch size, learning rate, etc. 
+learning_rate = 0.2
 episodes = 0
 
 # Global Constants, change these
@@ -25,7 +26,7 @@ MAX_EPISODES = 1
 
 if __name__ == "__main__":
     env = gym.make('CartPole-v1', render_mode='human')
-    # agnet = DQNAgent(input_dims, output_dims)
+    agnet = DQNAgent(input_dims, output_dims)
 
     # Make the main game loop.  
 

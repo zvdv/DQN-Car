@@ -6,10 +6,6 @@ import random as rnd
 from buffer import ReplayBuffer
 from model import Model
 
-# Tensorflow if you're using tensorflow
-import tensorflow as tf
-
-# pytorch if you're using pytorch
 import torch
 
 class DQNAgent():
@@ -18,8 +14,8 @@ class DQNAgent():
             self.input_dims = input_dims
             #self.observation_space = observation_space
 
-            #self.model = 
-            #self.target_model = 
+            self.model = Model
+            self.target_model = Model
 
             #self.replay_memory =             
 
@@ -92,7 +88,7 @@ class DQNAgent():
 
     def save(self, save_to_path: str) -> None:
         # if pytorch
-        #torch.save(self.target_model.state_dict(), save_to_path)
+        torch.save(self.target_model.state_dict(), save_to_path)
         pass
 
     def load(self, load_path: str) -> None:
@@ -102,8 +98,8 @@ class DQNAgent():
         #loaded_model = tf.keras.models.load_model(load_path)
 
         # if pytorch
-        #self.target_model.load_state_dict(torch.load(load_path))
-        #self.model.load_state_dict(torch.load(load_path))
+        self.target_model.load_state_dict(torch.load(load_path))
+        self.model.load_state_dict(torch.load(load_path))
 
         pass
 
