@@ -12,6 +12,7 @@ import torch
 # ex: pip install numpy or pip install torch
 
 from DQN import DQNAgent
+from buffer import ReplayBuffer
 
 # Hyperparams
 input_dims = 4
@@ -39,12 +40,12 @@ if __name__ == "__main__":
         done = False
 
         while not done:
-            
-            
             # Get action, ideally through your agent
             #action = env.action_space.sample()
             action = agent.get_action(observation)
+            _action = action # Store tensor version of action (idk yet if this is the right call for what to store in the memory)
             action = action.numpy()
+            _observation = observation # Store last observation before it gets updated
 
             # Take the action and observe the result
             observation, reward, terminated, trunicated, info = env.step(action)
@@ -56,6 +57,8 @@ if __name__ == "__main__":
                 done = True
 
             # Store our memory
+            memory = (_observation, _action, reward, observation)
+            ReplayBuffer.store_memory(memory)
 
             # learn?
             #agent.learn()
