@@ -23,6 +23,7 @@ episodes = 0
 
 # Global Constants, change these
 MAX_EPISODES = 1
+BUFFER_BATCH_SIZE = 30 # chose this number randomly idk
 
 
 if __name__ == "__main__":

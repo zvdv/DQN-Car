@@ -14,7 +14,7 @@ class ReplayBuffer():
 
     # Define memory buffer
     # array? list?
-    memories = []
+    memories = deque()
 
     def __init__(self):
         return

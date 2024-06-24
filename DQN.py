@@ -5,6 +5,7 @@ import random as rnd
 # These are your other files.
 from buffer import ReplayBuffer
 from model import Model
+import main
 
 import torch
 
@@ -55,8 +56,8 @@ class DQNAgent():
         '''
         loss = 0
         # We just pass through the learn function if the batch size has not been reached. 
-        #if self.replay_memory.__len__() < BUFFER_BATCH_SIZE:
-        #    return
+        if self.replay_memory.__len__() < main.BUFFER_BATCH_SIZE:
+            return
 
         state = []
         action = []
