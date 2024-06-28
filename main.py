@@ -20,11 +20,11 @@ output_dims = 2
 batch_size = 32 #I picked this pretty randomly
 learning_rate = 2e-4
 episodes = 0
+epsilon = np.linspace(1,0,500)
 
 # Global Constants, change these
-MAX_EPISODES = 1
-BUFFER_BATCH_SIZE = 30 # chose this number randomly idk
-
+MAX_EPISODES = 500
+BUFFER_BATCH_SIZE = 30 # chose this number randomly 
 
 if __name__ == "__main__":
     env = gym.make('CartPole-v1', render_mode='human')
@@ -35,9 +35,8 @@ if __name__ == "__main__":
     while episodes < MAX_EPISODES:
         time_step = 0
         rewards = []
-        #agent.replay_memory.erase_memory()
+        ReplayBuffer.erase_memory()
         observation, info = env.reset()
-        time_step = 0
         done = False
 
         while not done:
@@ -62,11 +61,18 @@ if __name__ == "__main__":
             ReplayBuffer.store_memory(memory)
 
             # learn?
-            #agent.learn()
+            DQNAgent.learn()
             time_step += 1
 
             env.render()
+
+        episodes += 1
         
+    # Plot stuff!!
+    # - reward
+    # - loss per episode
+    # - epsilon for fun?
+
     # TODO: Check if reward normalization makes sense!
     # agent.save()
     env.close()

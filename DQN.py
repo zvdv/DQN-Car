@@ -63,9 +63,13 @@ class DQNAgent():
         action = []
         reward = []
         next_state = []
-        #for _ in range(BATCH_SIZE):
-        #    s, a, r, n = self.replay_memory.collect_memory()
+        for i in range(main.BUFFER_BATCH_SIZE):
+            s, a, r, n = ReplayBuffer.collect_memory()
             # append to lists above probably
+            state[i] = s
+            action[i] = a
+            reward[i] = r
+            next_state[i] = n
 
         # Convert list of tensors to tensor.
 
@@ -78,6 +82,7 @@ class DQNAgent():
         # get max value
 
         # Calculate our target
+            difference = reward[i] + np.max(self.get_action(next_state[i])) - self.get_action(state[i])
 
         # Calculate MSE Loss
 

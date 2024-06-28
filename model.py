@@ -22,7 +22,6 @@ def Model(input_dims, output_dims):
         nn.Linear(20, 18),
         nn.ReLU(),
         nn.Linear(18, output_dims),
-        nn.Sigmoid()
     )
 
     return model
