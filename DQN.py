@@ -5,6 +5,7 @@ import random as rnd
 # These are your other files.
 from buffer import ReplayBuffer
 from model import Model
+import main
 
 import torch
 
@@ -14,8 +15,8 @@ class DQNAgent():
             self.input_dims = input_dims
             #self.observation_space = observation_space
 
-            self.model = Model
-            self.target_model = Model
+            self.model = Model(input_dims, output_dims)
+            self.target_model = Model(input_dims, output_dims)
 
             #self.replay_memory =             
 
@@ -36,7 +37,10 @@ class DQNAgent():
         or it can be inputted into this function as a tensor already. 
         mostly fashion. do what you please.
         '''
-        action = 0
+        state_tensor = torch.tensor(state)
+        result = self.model(state_tensor)
+        action = torch.argmax(result)
+
         return action
     
     def learn(self) -> float:
@@ -52,16 +56,20 @@ class DQNAgent():
         '''
         loss = 0
         # We just pass through the learn function if the batch size has not been reached. 
-        #if self.replay_memory.__len__() < BUFFER_BATCH_SIZE:
-        #    return
+        if self.replay_memory.__len__() < main.BUFFER_BATCH_SIZE:
+            return
 
         state = []
         action = []
         reward = []
         next_state = []
-        #for _ in range(BATCH_SIZE):
-        #    s, a, r, n = self.replay_memory.collect_memory()
+        for i in range(main.BUFFER_BATCH_SIZE):
+            s, a, r, n = ReplayBuffer.collect_memory()
             # append to lists above probably
+            state[i] = s
+            action[i] = a
+            reward[i] = r
+            next_state[i] = n
 
         # Convert list of tensors to tensor.
 
@@ -74,6 +82,7 @@ class DQNAgent():
         # get max value
 
         # Calculate our target
+            difference = reward[i] + np.max(self.get_action(next_state[i])) - self.get_action(state[i])
 
         # Calculate MSE Loss
 

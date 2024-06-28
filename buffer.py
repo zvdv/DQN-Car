@@ -10,12 +10,17 @@ class ReplayBuffer():
     one thing to note, memories almost always come in the SARS' format. That is 
     Experience = (state, action, reward, new_state)
 
-
     '''
+
+    # Define memory buffer
+    # array? list?
+    memories = deque()
+
     def __init__(self):
         return
 
     def store_memory(self, experience: tuple):
+        ReplayBuffer.memories.append(experience)
         return
 
     def collect_memory(self):
