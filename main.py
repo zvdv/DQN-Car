@@ -35,7 +35,7 @@ if __name__ == "__main__":
     while episodes < MAX_EPISODES:
         time_step = 0
         rewards = []
-        ReplayBuffer.erase_memory()
+        #ReplayBuffer.erase_memory()
         observation, info = env.reset()
         done = False
 

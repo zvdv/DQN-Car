@@ -5,7 +5,7 @@ import random as rnd
 # These are your other files.
 from buffer import ReplayBuffer
 from model import Model
-import main
+from params import BUFFER_BATCH_SIZE
 
 import torch
 
@@ -43,7 +43,7 @@ class DQNAgent():
 
         return action
     
-    def learn(self) -> float:
+    def learn() -> float:
         ''' 
         This function will be the source of 90% of your problems at the
         start. this is where the magic happens. it's also where the tears happen.
@@ -56,22 +56,39 @@ class DQNAgent():
         '''
         loss = 0
         # We just pass through the learn function if the batch size has not been reached. 
-        if self.replay_memory.__len__() < main.BUFFER_BATCH_SIZE:
+        if ReplayBuffer.__len__() < BUFFER_BATCH_SIZE:
+            print("Returning!")
             return
+
+        print(BUFFER_BATCH_SIZE)
 
         state = []
         action = []
         reward = []
         next_state = []
-        for i in range(main.BUFFER_BATCH_SIZE):
+        for i in range(BUFFER_BATCH_SIZE):
+            print(i)
             s, a, r, n = ReplayBuffer.collect_memory()
             # append to lists above probably
-            state[i] = s
-            action[i] = a
-            reward[i] = r
-            next_state[i] = n
+            state.append(s)
+            action.append(a)
+            reward.append(r)
+            next_state.append(n)
+
+        #print('Shape of state: ', len(state), ' by ', len(state[0])) # 30x4
+        #print("Shape of action: ", len(action)) # 30x1
+        #print("Len of reward: ", len(reward)) # 30x1
+        #print("Shape of next state: ", len(next_state), " by ", len(next_state[0])) # 30x4
 
         # Convert list of tensors to tensor.
+        state = torch.tensor(state)
+        action = torch.tensor(action)
+        reward = torch.tensor(reward)
+        next_state = torch.tensor(next_state)
+        # state = torch.stack(state, dim=0)
+        # action = torch.stack(action, dim=0)
+        # reward = torch.stack(reward, dim=0)
+        # next_state = torch.stack(reward, dim=0)
 
         # One hot encoding our actions. 
 
@@ -82,7 +99,7 @@ class DQNAgent():
         # get max value
 
         # Calculate our target
-            difference = reward[i] + np.max(self.get_action(next_state[i])) - self.get_action(state[i])
+        #difference = reward[i] + np.max(self.get_action(next_state[i])) - self.get_action(state[i])
 
         # Calculate MSE Loss
 
@@ -122,8 +139,9 @@ if __name__ == "__main__":
     So, if you had a print statement outside of this block and called functions or classes,
     they will be ignored. 
     '''
-    input_dims = 4
-    output_dims = 2
-    buffer = DQNAgent(input_dims, output_dims)
+    # input_dims = 4
+    # output_dims = 2
+    # buffer = DQNAgent(input_dims, output_dims)
+    DQNAgent.learn()
     print('dqn agent')
 
