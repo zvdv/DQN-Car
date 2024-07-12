@@ -14,7 +14,7 @@ class ReplayBuffer():
 
     # Define memory buffer
     # array? list?
-    memories = deque()
+    memories = deque([], maxlen=1000) # Will automatically remove elements from the left after reaching this length
 
     def __init__(self):
         return

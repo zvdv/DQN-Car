@@ -57,17 +57,17 @@ class DQNAgent():
         loss = 0
         # We just pass through the learn function if the batch size has not been reached. 
         if ReplayBuffer.__len__() < BUFFER_BATCH_SIZE:
-            print("Returning!")
+            #print("Returning!")
             return
 
-        print(BUFFER_BATCH_SIZE)
+        #print(BUFFER_BATCH_SIZE)
 
         state = []
         action = []
         reward = []
         next_state = []
         for i in range(BUFFER_BATCH_SIZE):
-            print(i)
+            #print(i)
             s, a, r, n = ReplayBuffer.collect_memory()
             # append to lists above probably
             state.append(s)
@@ -89,6 +89,10 @@ class DQNAgent():
         # action = torch.stack(action, dim=0)
         # reward = torch.stack(reward, dim=0)
         # next_state = torch.stack(reward, dim=0)
+        
+        '''
+        State: [cart position, cart velocity, pole angle, pole angular velocity]
+        '''
 
         # One hot encoding our actions. 
 
@@ -97,11 +101,15 @@ class DQNAgent():
         # Get the training model assessed Q value of the current turn. 
 
         # get max value
+        max = np.max(DQNAgent.get_action(next_state))
 
         # Calculate our target
-        #difference = reward[i] + np.max(self.get_action(next_state[i])) - self.get_action(state[i])
+        targ = DQNAgent.get_action(state)
+
+        difference = reward + max - targ
 
         # Calculate MSE Loss
+        loss = torch.nn.MSELoss(targ, reward+max)
 
         # backward pass
 
