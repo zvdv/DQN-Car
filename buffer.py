@@ -10,22 +10,28 @@ class ReplayBuffer():
     one thing to note, memories almost always come in the SARS' format. That is 
     Experience = (state, action, reward, new_state)
 
-
     '''
+
+    # Define memory buffer
+    # array? list?
+    memories = deque([], maxlen=1000) # Will automatically remove elements from the left after reaching this length
+
     def __init__(self):
         return
 
-    def store_memory(self, experience: tuple):
+    def store_memory(experience: tuple):
+        ReplayBuffer.memories.append(experience)
         return
 
-    def collect_memory(self):
-        return 
+    def collect_memory():
+        return ReplayBuffer.memories.popleft()
         
-    def erase_memory(self):
+    def erase_memory():
+        ReplayBuffer.memories.clear()
         return
     
-    def __len__(self):
-        return
+    def __len__():
+        return len(ReplayBuffer.memories)
 
 
 if __name__ == "__main__":
